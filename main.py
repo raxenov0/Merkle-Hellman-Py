@@ -1,0 +1,12 @@
+import MerkleHellman
+
+MerkleHellmanInstanceClass = MerkleHellman.MerkleHellmanAlgoritm()
+MerkleHellmanInstanceClass.initSecretKey()
+MerkleHellmanInstanceClass.initilization_Q()
+MerkleHellmanInstanceClass.initilization_R()
+MerkleHellmanInstanceClass.setWord()
+MerkleHellmanInstanceClass.setBinaryInput()
+MerkleHellmanInstanceClass.generatePublicKey()
+MerkleHellmanInstanceClass.encryption()
+MerkleHellmanInstanceClass.decryption()
+MerkleHellmanInstanceClass.showResults()
