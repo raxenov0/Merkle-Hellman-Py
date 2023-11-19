@@ -80,6 +80,7 @@ class MerkleHellmanAlgoritm:
                 if str[i] == '1':
                     sum += self.publicKey[i]
             self.binaryEncryptedInput.append(sum)
+        return self.binaryEncryptedInput
 
     def decryption(self):
         self.reverseMultiplicate = self.multiplicativeInverse(self.r, self.q)
@@ -106,6 +107,7 @@ class MerkleHellmanAlgoritm:
 
         decimals = self.binaryToDecimal(self.binaryDecryptedOutput)
         self.decryptedOutput = ''.join([chr(c) for c in decimals])
+        return self.decryptedOutput
 
     def calculateNOD(self, a, b):
         if a == 0:
