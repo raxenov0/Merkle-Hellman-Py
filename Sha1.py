@@ -8,22 +8,27 @@ class SHA1:
     D = 0x10325476
     E = 0xC3D2E1F0
 
-    def left_rotate(n, b):
+    def left_rotate(self, n, b):
         return ((n << b) | (n >> (32 - b))) & 0xffffffff
     
-    def hashing(self, message):
-        message = message.encode('utf-8')
-        padding = chr(128) + chr(0) * (55 - len(message) % 64)
-        if len(message) % 64 > 55:
-            padding += chr(0) * (64 + 55 - len(message) % 64)
-            message = message + padding + struct.pack('>Q', 8 * len(message))
+    def hashing(self, data):
+        message = bytearray(data, encoding='utf-8')
+        message.append(0x80)
+        # Pad with zeroes until message length in bytes is 56 (mod 64).
+        message.extend([0] * (63 - (len(message) + 7) % 64))
+        # Append the original length (big-endian, 64 bits).
+        message.extend(struct.pack('>Q', len(data) * 8))
+        # padding = (chr(128) + chr(0) * (55 - len(message) % 64))
+        # if len(message) % 64 > 55:
+        #     padding += (chr(0) * (64 + 55 - len(message) % 64))
+        # message = message + padding.encode('utf-8') + struct.pack(b'>Q', 8 * len(message))
 
         for i in range(0, len(message), 64): #размер блока 64 бит
             w = [0] * 80 #пустой список на 80 символов
             for j in range(16):
-                w[j] = struct.unpack('>I', message[i+j*4 : i+j*4+4])[0] #определяем число из 4 байт
+                w[j] = struct.unpack(b'>I', message[i+j*4 : i+j*4+4])[0] #определяем число из 4 байт
             for j in range(16, 80):
-                w[j] = self.left_rotate(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1)
+                w[j] = self.left_rotate((w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16]), 1)
 
         a = self.A
         b = self.B

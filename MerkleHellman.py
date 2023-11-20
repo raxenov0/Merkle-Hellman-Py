@@ -56,8 +56,11 @@ class MerkleHellmanAlgoritm:
             self.r = random.randint(1, 100)
         return self.r
 
-    def setWord(self):
-        self.word = os.getenv("temp")
+    def setWord(self, withDocker = True, Word = ""):
+        if withDocker:
+            self.word = os.getenv("temp")
+        else:
+            self.word = Word
         # self.word = input("Введите данные: ")
 
     def getWord(self):
