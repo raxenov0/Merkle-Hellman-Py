@@ -55,7 +55,6 @@ class MerkleHellmanAlgoritm:
         self.sizeBlock = length
         for i in range(0, int(length)):
             self.secretKey.append(2 ** i)
-        print(self.secretKey)
 
     def initilization_Q(self):
         self.q = random.randint(0, 100) + sum(self.secretKey)
@@ -86,7 +85,6 @@ class MerkleHellmanAlgoritm:
     def generatePublicKey(self):
         for c in self.secretKey:
             self.publicKey.append(c * self.r % self.q)
-        print(self.publicKey)
 
     def encryption(self):
         numbBlocks = math.ceil(int(len(self.binaryInput)) / int(self.sizeBlock))
@@ -109,7 +107,6 @@ class MerkleHellmanAlgoritm:
 
         temp = []
         for i in self.binaryEncryptedInput:
-            print(i)
             temp.append(i * self.reverseMultiplicate % self.q)
 
 
