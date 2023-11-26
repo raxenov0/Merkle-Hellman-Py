@@ -5,11 +5,13 @@ import random
 class MerkleHellmanAlgoritm:
     sizeBlock = 8
     word = ""
+    sizeBlock = 8
     q = 0
     r = 0
     secretKey = [] 
     publicKey = []
-    binaryInput = ""
+    binaryInput = []
+    binaryInputString = ""
     binaryEncryptedInput = []
     binaryDecryptedOutput = []
     decryptedOutput = []
@@ -20,14 +22,13 @@ class MerkleHellmanAlgoritm:
         while(len(result) < int(size)):
             result = "0" + result
         return result
-            
 
     def decimalToBinary(self, decimal):
         binary = ""
         while decimal > 0:
             binary = str(decimal % 2) + binary
             decimal //= 2
-        while len(binary) < 7:
+        while len(binary) < self.sizeBlock:
             binary = "0" + binary
         return binary
     
@@ -51,9 +52,9 @@ class MerkleHellmanAlgoritm:
                 return False
         return True
 
-    def initSecretKey(self, length = 8):
-        self.sizeBlock = length
-        for i in range(0, int(length)):
+    def initSecretKey(self, sizeBlock = 8):
+        self.sizeBlock = sizeBlock
+        for i in range(int(sizeBlock)):
             self.secretKey.append(2 ** i)
 
     def initilization_Q(self):
@@ -80,21 +81,31 @@ class MerkleHellmanAlgoritm:
         word = self.getWord()
         for i in range(len(word)):
             unicodeSym = ord(word[i])
-            self.binaryInput += self.decimalToBinary(unicodeSym)
+            self.binaryInputString += self.decimalToBinary(unicodeSym)
+            self.binaryInput.append(self.decimalToBinary(unicodeSym))
 
     def generatePublicKey(self):
         for c in self.secretKey:
             self.publicKey.append(c * self.r % self.q)
 
     def encryption(self):
-        numbBlocks = math.ceil(int(len(self.binaryInput)) / int(self.sizeBlock))
+        # for str in self.binaryInput:
+        #     sum = 0
+        #     for i in range(len(str)):
+        #         if str[i] == '1':
+        #             sum += self.publicKey[i]
+        #     self.binaryEncryptedInput.append(sum)
+        # return self.binaryEncryptedInput
+    
+        numbBlocks = math.ceil(int(len(self.binaryInputString)) / int(self.sizeBlock))
     
         for numBlock in range(numbBlocks):
-            end = int(numBlock) * int(self.sizeBlock) + int(self.sizeBlock) - 1
-            if end > len(self.binaryInput):
-                end = len(self.binaryInput) 
-            binaryBlock = self.appendNullsForSizeBytes(self.binaryInput[int(numBlock) * int(self.sizeBlock):end], self.sizeBlock)
+            end = int(numBlock) * int(self.sizeBlock) + int(self.sizeBlock)
+            if end > len(self.binaryInputString):
+                end = len(self.binaryInputString) 
+            binaryBlock = self.appendNullsForSizeBytes(self.binaryInputString[int(numBlock) * int(self.sizeBlock):end], self.sizeBlock)
             sum = 0
+          
             for i in range(len(binaryBlock)):
                 if binaryBlock[i] == '1':
                     sum += self.publicKey[i]
@@ -114,8 +125,6 @@ class MerkleHellmanAlgoritm:
             index = ""
             while temp[i] != 0:
                 for c in range(len(self.secretKey)):
-                    # if c == 0:
-                    #     continue
                     if temp[i] < self.secretKey[c]:
                         index += "0"
                         continue

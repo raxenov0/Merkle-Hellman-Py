@@ -3,14 +3,11 @@ import Sha1
 
 
 SHA = Sha1.SHA1()
-hash = SHA.hashing("word")
+hash = SHA.hashing("wordPass")
 print("Hash: ", hash)
 
 MerkleHellmanInstanceClass = MerkleHellman.MerkleHellmanAlgoritm()
-#задать размер ключа
-keyLength = input("Введите размер ключа: ")
-
-MerkleHellmanInstanceClass.initSecretKey(keyLength)
+MerkleHellmanInstanceClass.initSecretKey(8)
 MerkleHellmanInstanceClass.initilization_Q()
 MerkleHellmanInstanceClass.initilization_R()
 MerkleHellmanInstanceClass.setWord(False, hash)
