@@ -109,9 +109,9 @@ class MerkleHellmanAlgoritm:
 
         temp = []
         for i in self.binaryEncryptedInput:
+            print(i)
             temp.append(i * self.reverseMultiplicate % self.q)
 
-        print(temp)
 
         for i in range(len(temp)):
             index = ""

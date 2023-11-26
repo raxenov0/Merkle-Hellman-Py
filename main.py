@@ -3,7 +3,7 @@ import Sha1
 
 
 SHA = Sha1.SHA1()
-hash = SHA.hashing("1234")
+hash = SHA.hashing("word")
 print("Hash: ", hash)
 
 MerkleHellmanInstanceClass = MerkleHellman.MerkleHellmanAlgoritm()
@@ -20,4 +20,4 @@ MerkleHellmanInstanceClass.generatePublicKey()
 MerkleHellmanInstanceClass.encryption()
 MerkleHellmanInstanceClass.decryption()
 
-# MerkleHellmanInstanceClass.showResults()
+MerkleHellmanInstanceClass.showResults()
